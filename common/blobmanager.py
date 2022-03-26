@@ -2,11 +2,12 @@ import os
 import io
 from azure.storage.blob import BlobServiceClient
 
+
 class BlobManager:
     def __init__(self):
-        self.constring = os.environ["BlobStorageConnectionString"] 
+        self.constring = os.environ["BlobStorageConnectionString"]
         self.storeName = os.environ["BlobStorageStoreName"]
-        self.bsc =  BlobServiceClient.from_connection_string(self.constring)
+        self.bsc = BlobServiceClient.from_connection_string(self.constring)
 
     def write_blob(self, file):
         blob_container_client = self.bsc.get_container_client(self.storeName)

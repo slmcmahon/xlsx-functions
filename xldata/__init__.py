@@ -1,15 +1,8 @@
 import logging
-import json
-import os
 
 from common.blobmanager import BlobManager
-import azure.functions as func
-from azure.servicebus import ServiceBusClient, ServiceBusMessage
-
 from common.servicebusmanager import ServiceBusManager
-
-SERVICE_BUS_CONNECTION_STRING = os.environ["ServiceBusConnectionString"]
-SERVICE_BUS_QUEUE_NAME = os.environ["ServiceBusQueueName"]
+import azure.functions as func
 
 
 def main(req: func.HttpRequest) -> func.HttpResponse:

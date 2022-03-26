@@ -1,5 +1,6 @@
 import logging
 
+
 def process(xl):
     sheet = xl.active
 
