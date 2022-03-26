@@ -30,12 +30,12 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
 
 
 def enqueue_message(fileName, fileId, customerId, fileType):
-    message = {
-        "id": f"{fileId}",
-        "name": f"{fileName}",
-        "customerId": f"{customerId}",
-        "type": f"{fileType}"
-    }
+    message = {}
+    message["id"] = fileId
+    message["name"] = fileName 
+    message["customerId"] = customerId
+    message["type"] = fileType
+    
     sbmessage = ServiceBusMessage(json.dumps(message))
     servicebus_client = ServiceBusClient.from_connection_string(
         SERVICE_BUS_CONNECTION_STRING)
@@ -44,12 +44,11 @@ def enqueue_message(fileName, fileId, customerId, fileType):
             queue_name=SERVICE_BUS_QUEUE_NAME)
         sender.send_messages([sbmessage])
 
-
 def store_file(file):
     filename = file.filename
     blob_service_client = BlobServiceClient.from_connection_string(
         BLOBSTORE_CONNECTION_STRING)
-    container_client = blob_service_client.get_container_client(
+    blob_container_client = blob_service_client.get_container_client(
         BLOBSTORE_STORE_NAME)
-    blob_client = container_client.get_blob_client(filename)
+    blob_client = blob_container_client.get_blob_client(filename)
     blob_client.upload_blob(file, blob_type="BlockBlob", overwrite=True)
