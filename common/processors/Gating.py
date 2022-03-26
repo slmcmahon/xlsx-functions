@@ -1,11 +1,11 @@
 import logging
 
-class GatingProcessor:
-    def __init__(self):
-        pass
+class Gating:
+    def __init__(self, xldocument):
+        self.xldocument = xldocument
 
-    def process(self, xldocument):
-        sheet = xldocument.active
+    def process(self):
+        sheet = self.xldocument.active
 
         # for each row in the sheet, do something with the data
         for row in sheet.iter_rows(min_row=2):

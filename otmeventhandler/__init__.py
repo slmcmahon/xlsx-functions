@@ -21,11 +21,15 @@ def main(msg: func.ServiceBusMessage):
     # locate the handler that corresponds to the type that we got
     # from our service bus message and process the contents of the file
     try:
-        class_name = f"{msg['type'].capitalize()}Processor"
-        module = __import__(f"common.{class_name}", fromlist=[''])
+        # ensure that the incoming type is capitalized to match the name of the class
+        # in common.processors
+        class_name = msg['type'].capitalize()
+        module = __import__(f"common.processors.{class_name}", fromlist=[''])
+        # dynamically load the class and pass in the workbook from blobstorage
         class_ = getattr(module, class_name)
-        handler = class_()
-        handler.process(xldocument=openpyxl.load_workbook(bytes))
+        handler = class_(openpyxl.load_workbook(bytes))
+        # execute the process method -- all file processors must have a process() method
+        handler.process()
     except Exception as ex:
         # need to do more here to ensure that we are aware of failures.
         logging.error(ex)
