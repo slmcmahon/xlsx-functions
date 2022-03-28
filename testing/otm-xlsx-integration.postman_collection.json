@@ -1,0 +1,54 @@
+{
+	"info": {
+		"_postman_id": "84fb5e29-9224-46e3-be7c-b759c1421dcf",
+		"name": "otm-xlsx-integration",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Send Test",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/C:/path/to/DataSample.xlsx"
+						},
+						{
+							"key": "customerId",
+							"value": "dfce4c80-ccd7-4a1a-a526-a7daf0e41541",
+							"type": "text"
+						},
+						{
+							"key": "fileType",
+							"value": "gating",
+							"type": "text"
+						},
+						{
+							"key": "fileId",
+							"value": "d0fef03b-0838-4326-934d-bc68c2316a83",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:7071/api/xldata",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7071",
+					"path": [
+						"api",
+						"xldata"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
