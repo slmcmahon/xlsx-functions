@@ -5,10 +5,9 @@ from azure.servicebus import ServiceBusClient, ServiceBusMessage
 
 
 class ServiceBusManager:
-    def __init__(self):
-        self.queue_name = os.environ["ServiceBusQueueName"]
-        self.sbc = ServiceBusClient.from_connection_string(
-            os.environ["ServiceBusConnectionString"])
+    def __init__(self, conn_string, queue_name):
+        self.queue_name = queue_name
+        self.sbc = ServiceBusClient.from_connection_string(conn_string)
 
     def enqueue(self, message):
         sbmessage = ServiceBusMessage(json.dumps(message))

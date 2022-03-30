@@ -1,4 +1,5 @@
 import logging
+import os
 
 from common.BlobManager import BlobManager
 from common.ServiceBusManager import ServiceBusManager
@@ -14,21 +15,23 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     fileType = req.form.get('fileType')
 
     # create instances of our helper classes
-    bm = BlobManager()
-    sbm = ServiceBusManager()
+    bm = BlobManager(
+        os.environ["BlobStorageConnectionString"], os.environ["BlobStorageStoreName"])
+    sbm = ServiceBusManager(
+        os.environ["ServiceBusConnectionString"], os.environ["ServiceBusQueueName"])
 
     try:
         # write our file to blob storage
         bm.write_blob(file)
-        
+
         # create a message and enqueue it in our service bus
         message = {}
         message["id"] = fileId
-        message["name"] = file.filename 
+        message["name"] = file.filename
         message["customerId"] = customerId
         message["type"] = fileType
         sbm.enqueue(message)
-        
+
         # respond to the caller
         return func.HttpResponse(f"{file.filename} was uploaded successfully.")
     except Exception as ex:

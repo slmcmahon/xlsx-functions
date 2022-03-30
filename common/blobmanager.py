@@ -4,9 +4,9 @@ from azure.storage.blob import BlobServiceClient
 
 
 class BlobManager:
-    def __init__(self):
-        self.constring = os.environ["BlobStorageConnectionString"]
-        self.storeName = os.environ["BlobStorageStoreName"]
+    def __init__(self, conn_string, store_name):
+        self.constring = conn_string
+        self.storeName = store_name
         self.bsc = BlobServiceClient.from_connection_string(self.constring)
 
     def write_blob(self, file):
